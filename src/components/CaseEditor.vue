@@ -12,7 +12,6 @@
 import chart from './Chart';
 import JSONEditor from 'jsoneditor';
 import 'jsoneditor/dist/jsoneditor.css';
-import testData from "../assets/data.json";
 
 export default {
   name: "CaseEdite",
@@ -50,11 +49,12 @@ export default {
         // mainMenuBar:false
       };
       this.editor = new JSONEditor(container, options);
-      this.jsonData = {"nodes": [
+      this.jsonData = {
+        "nodes": [
           {
             "name": "A",
             "id": 1
-          },{
+          }, {
             "name": "B",
             "id": 2
           }
@@ -62,15 +62,22 @@ export default {
         "relations": [{
           "source": 1,
           "target": 2
-        }]};
+        }]
+      };
     },
     editeJson() {
       this.isShow = !this.isShow;
     },
     save() {
       // getJson
+      this.isShow = false;
       const updatedJson = this.editor.get();
-      if(JSON.stringify(this.jsonData)== JSON.stringify(updatedJson)){
+      try {
+        if (JSON.stringify(this.jsonData) === JSON.stringify(updatedJson)) {
+          return;
+        }
+      } catch (e) {
+        console.log("json 格式错误")
         return;
       }
       this.jsonData = updatedJson;
