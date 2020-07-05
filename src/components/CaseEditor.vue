@@ -1,9 +1,11 @@
 <template>
   <div class="main">
-    <el-button @click="editeJson">编辑器</el-button>
-    <el-button @click="save">保存</el-button>
+    <div style="text-align: right">
+      <el-button @click="editeJson">编辑器</el-button>
+      <el-button @click="save">保存</el-button>
+    </div>
     <div v-show="isShow" id="jsoneditor" style="width: 400px; height: 400px;
-    position: fixed;z-index: 1;opacity: 0.9;"></div>
+           float:right;z-index: 1;opacity: 0.9;"></div>
     <chart style="position: fixed" :jsonData="jsonData">案例库编辑</chart>
   </div>
 </template>
