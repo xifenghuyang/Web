@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div v-html="dddd"></div>
+<!--    <div v-html="dddd"></div>-->
+    <div id="mermaid1"></div>
   </div>
 
 </template>
@@ -22,14 +23,18 @@ const defaultConfig = {
 
 export default {
   name: "Chart",
+  props: ['jsonData'],
   data() {
     return {
-      eee: `graph LR;\nA-->B;`,
-      dddd: `graph LR
-      A[Hard] -->|Text| B(Round)
-B --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]`
+      dddd: ""
+    }
+  },
+  watch: {
+    jsonData: function () {
+      console.log("mermadi数据变化");
+      this.dddd = `graph LR
+      01[${this.jsonData.nodes[0].name}] --> |Text| B(Round)`;
+      this.loadNodes();
     }
   },
   mounted() {
@@ -45,10 +50,13 @@ C -->|Two| E[Result 2]`
       this.$emit("nodeClick", id);
     },
     loadNodes() {
+      if (this.dddd == "") {
+        return;
+      }
       mermaid.render("newMermaid", this.dddd, (svgCode) => {
-        this.dddd = svgCode;
-        // let container = document.getElementById("mermaid1");
-        // container.innerHTML = svgCode;
+        // this.dddd = svgCode;
+        let container = document.getElementById("mermaid1");
+        container.innerHTML = svgCode;
       });
     }
   },

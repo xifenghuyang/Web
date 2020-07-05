@@ -1,0 +1,15 @@
+{
+  "nodes": [
+    {
+      "name": "A",
+      "id": 1
+    },{
+      "name": "B",
+      "id": 2
+    }
+  ],
+  "relations": [{
+    "source": 1,
+    "target": 2
+  }]
+}
