@@ -1,12 +1,12 @@
 <template>
     <div>
-      <h2>影响范围列表</h2>
+      <h2>修复建议</h2>
     </div>
 </template>
 
 <script>
     export default {
-        name: "Influence"
+        name: "Solution"
     }
 </script>
 

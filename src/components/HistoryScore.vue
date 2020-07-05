@@ -4,6 +4,7 @@
 
 <script>
   import echarts from 'echarts/lib/echarts';
+  // import axios from 'axios';
   // 引入柱状图
   import 'echarts/lib/chart/line';
   import 'echarts/lib/component/title';
@@ -11,6 +12,7 @@
   import 'echarts/lib/component/toolbox';
   import 'echarts/lib/component/markPoint';
   import 'echarts/lib/component/tooltip';
+  import ES from './ESTest';
 
   export default {
     mounted(){
@@ -61,7 +63,13 @@
     watch: {
       timeArea: function (){
         console.log('折线图获取时间,开始渲染',this.timeArea);
-        this.initData()
+        ES.fun();
+        // axios({
+        //   url:'/api'
+        // }).then(res=>{
+        //   console.log(res);
+        // })
+        // this.initData()
       }
     }
   }

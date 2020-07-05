@@ -51,6 +51,7 @@
 
 <script>
   export default {
+    props:['timeArea'],
     data() {
       return {
         tableData: [
@@ -92,7 +93,7 @@
         } else if (rowIndex === 3) {
           return 'success-row';
         }
-        console.log(row)
+        console.debug(row);
         return '';
       },
       handleEdit(index, row) {
@@ -100,6 +101,11 @@
       },
       handleDelete(index, row) {
         console.log(index, row);
+      }
+    },
+    watch: {
+      timeArea: function () {
+        console.log('故障列表获取时间,开始渲染', this.timeArea);
       }
     }
   }

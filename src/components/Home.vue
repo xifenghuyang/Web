@@ -1,49 +1,65 @@
 <template>
   <div>
     <div class="header_container" style="">
-      <!--      导航区-->
-      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal"
-               @select="handleSelect" background-color="#545c64"
-               text-color="#fff" active-text-color="#ffd04b">
-        <el-menu-item index="1" disabled>网络健康度</el-menu-item>
-        <el-menu-item index="2">历史数据</el-menu-item>
-        <el-menu-item index="3">案例库设置</el-menu-item>
+      <!--导航区-->
+      <el-menu :default-active="$route.path" mode="horizontal" @select="handleSelect"
+               background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+        <el-menu-item v-for="(item, i) in navList" :key="i" :index="item.name"
+                      :disabled="item.disable">{{ item.navItem }}
+        </el-menu-item>
       </el-menu>
-      <!--      时间选择器-->
+      <!--时间选择器-->
       <DatePicker @sendTime="getTime"></DatePicker>
     </div>
-<!--    <router-link to="/main">主页</router-link>-->
-<!--    <router-view id="main"></router-view>-->
-    <MainPage :timeArea="timeArea"></MainPage>
+    <!--主页面-->
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
   import DatePicker from "@/components/DatePicker";
-  import MainPage from "@/components/MainPage";
+
+  const navList = [
+    {name: '/', navItem: '网络健康度', disable: true},
+    {name: '/home/analysis', navItem: '历史数据', disable: false},
+    {name: '/cases', navItem: '案例设置', disable: false}
+  ];
 
   export default {
     name: "Home",
     data() {
       return {
-        activeIndex: "2",
+        aaa: false,
+        navList: navList,
         timeArea: [0, 0]
       }
     },
     methods: {
       handleSelect(key, keyPath) {
-        console.log(key, keyPath);
+        this.$router.push({
+          path:key,
+          query:{
+            startTime: this.timeArea[0],
+            endTime:this.timeArea[1]
+          }
+        })
+        console.log(key+"-"+ keyPath);
       },
       getTime(value) {
         // 给MainPage时间
         this.timeArea = value;
+        this.$router.push({
+          query:{
+            startTime: this.timeArea[0],
+            endTime:this.timeArea[1]
+          }
+        })
         console.log("Home拿到时间", value);
       }
     },
     components: {
       DatePicker,
-      MainPage
-    },
+    }
     // watchs
   }
 </script>
@@ -60,19 +76,4 @@
     justify-content: space-between;
     align-items: center
   }
-
-  .main {
-    position: absolute;
-    top: 60px;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    overflow: auto;
-  }
-
-  .active{
-    background-color: #545c64;
-    color: white;
-  }
-
 </style>
