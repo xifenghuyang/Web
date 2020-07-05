@@ -1,12 +1,12 @@
 <template>
     <div>
-      <h2>路由载入</h2>
+      <h2>告警根因传播关系图</h2>
     </div>
 </template>
 
 <script>
     export default {
-        name: "About"
+        name: "AlarmAnalysis"
     }
 </script>
 
