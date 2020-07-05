@@ -1,13 +1,14 @@
 //
 // const webpack = require('webpack')
 //
-// module.exports = {
-//   configureWebpack: config =>{
-//     if(process.env.NODE_ENV !== 'production') return;
-//     return {
-//       plugins:[
-//         new webpack.BannerPlugin('banqusuoyou')
-//       ]
-//     }
-//   }
-// }
+module.exports = {
+  devServer: {
+    proxy: {
+      '/es':{
+        target: 'http://192.168.9.105:9200/',
+        changeOrigin: true,
+        pathRewrite: {'^/api' : ''}
+      }
+    }
+  }
+}

@@ -1,10 +1,10 @@
 <template>
   <div class="main">
-    <el-button @click="change">编辑器</el-button>
+    <el-button @click="editeJson">编辑器</el-button>
+    <el-button @click="save">保存</el-button>
     <div v-show="isShow" id="jsoneditor" style="width: 400px; height: 400px;
     position: fixed;z-index: 1;opacity: 0.9;"></div>
     <chart style="position: fixed">案例库编辑</chart>
-<!--    <vueMermaid type="graph LR" :config="config" :nodes="nodes"></vueMermaid>-->
   </div>
 </template>
 
@@ -17,36 +17,13 @@ export default {
   name: "CaseEdite",
   data() {
     return {
+      editor: null,
       isShow:true,
-      myMode:"code",
-      json: {
-        msg: 'demo of jsoneditor'
-      },
-      config: {
-        journery: {
-          fontSize: '40'
-        },
-        flowchart: {
-          curve: 'cardinal'
-        }
-      },
-      nodes: [
-        {
-          id: "1",
-          text: "A",
-          link: ["-- yes -->", "-- no -->"],
-          linkNumber: 1,
-          linkStyle: "fill:none,stroke:red,stroke-width:1px;",
-          next: ["2", "3"],
-          editable: true
-        },
-        {id: "2", text: "B"},
-        {id: "3", text: "C"}
-      ],
+      jsonData1:"",
+      jsonData:`graph LR;\nA-->B;`
     }
   },
   mounted(){
-
     const container = document.getElementById("jsoneditor")
     const options = {
       mode:'code',
@@ -54,33 +31,32 @@ export default {
       enableSort:false,
       enableTransform:false
       // mainMenuBar:false
-    }
-    const editor = new JSONEditor(container, options)
-
-    // set json
-    const initialJson = {
-      "Array": [1, 2, 3],
-      "Boolean": true,
-      "Null": null,
-      "Number": 123,
-      "Object": {"a": "b", "c": "d"},
-      "String": "Hello World"
-    }
-    editor.set(initialJson)
-
-    // get json
-    const updatedJson = editor.get()
+    };
+    this.editor = new JSONEditor(container, options);
+    this.editor.set(this.jsonData);
   },
   components: {
     chart,
     // vueMermaid
   },
   methods:{
-    onJsonChange (value) {
-      console.log('value:', value)
-    },
-    change(){
+    editeJson(){
       this.isShow = !this.isShow;
+      // set json
+      const initialJson = {
+        "Array": [1, 2, 3],
+        "Boolean": true,
+        "Null": null,
+        "Number": 123,
+        "Object": {"a": "b", "c": "d"},
+        "String": "Hello World"
+      }
+      this.editor.set(initialJson)
+    },
+    save(){
+      // getJson
+      const updatedJson = this.editor.get();
+      console.log(updatedJson);
     }
   }
 }
