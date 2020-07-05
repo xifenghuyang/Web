@@ -72,14 +72,9 @@ export default {
       // getJson
       this.isShow = false;
       const updatedJson = this.editor.get();
-      // try {
-        if (JSON.stringify(this.jsonData) === JSON.stringify(updatedJson)) {
-          return;
-        }
-      // } catch (e) {
-      //   console.log("json 格式错误")
-      //   return;
-      // }
+      if (JSON.stringify(this.jsonData) === JSON.stringify(updatedJson)) {
+        return;
+      }
       this.jsonData = updatedJson;
     }
   }
